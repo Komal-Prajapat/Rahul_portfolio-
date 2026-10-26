@@ -72,11 +72,10 @@ export const IconFileSpreadsheet: React.FC<IconProps> = ({ className = "", size 
 
 export const IconBot: React.FC<IconProps> = ({ className = "", size = 20, color = "currentColor" }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <rect x="3" y="11" width="18" height="10" rx="2" />
-    <circle cx="12" cy="5" r="2" />
-    <path d="M12 7v4" />
-    <line x1="8" y1="16" x2="8.01" y2="16" />
-    <line x1="16" y1="16" x2="16.01" y2="16" />
+    <path d="M12 2a4 4 0 0 0-4 4v1H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4Z" />
+    <path d="M9 14h.01" />
+    <path d="M15 14h.01" />
+    <path d="M9 18h6" />
   </svg>
 );
 

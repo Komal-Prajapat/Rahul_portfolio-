@@ -32,6 +32,7 @@ import {
   IconSearch,
   IconFileText,
   IconActivity,
+  IconX,
 } from "@/components/Icons";
 import { MobileSwiper } from "@/components/MobileSwiper";
 import { CardSwiper } from "@/components/CardSwiper";
@@ -64,6 +65,7 @@ export default function Home() {
   const [skillCategory, setSkillCategory] = useState<string>("all");
   const [skillSearch, setSkillSearch] = useState<string>("");
   const [experienceTab, setExperienceTab] = useState<string>("all");
+  const [selectedExperience, setSelectedExperience] = useState<ExperienceItem | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const skillsData: SkillItem[] = [
@@ -418,10 +420,8 @@ export default function Home() {
                 <div className="hero-badge-wrap">
                   <div className="status-pill">
                     <span className="pulse-dot"></span>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
-                      <IconGlobe size={15} color="var(--accent-sky)" />
-                      <span>Available for Global Roles • IT Infrastructure & MIS Specialist</span>
-                    </span>
+                    {/* <IconGlobe size={15} color="var(--accent-sky)" className="status-pill-icon" /> */}
+                    <span className="status-pill-text">Available for Global Roles • IT Infra & MIS Specialist</span>
                   </div>
                 </div>
 
@@ -493,47 +493,49 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Quick KPI Counters */}
-            <div className="kpi-grid" data-aos="fade-up" data-aos-delay="200">
-              <div className="kpi-card">
-                <div className="kpi-icon-box">
-                  <IconClock size={26} />
+            {/* Quick KPI Counters - Responsive Swiper on Mobile / Grid on Desktop */}
+            <div data-aos="fade-up" data-aos-delay="200" style={{ marginTop: "40px" }}>
+              <MobileSwiper desktopGridClass="kpi-grid" id="kpi-swiper" cardWidthMobile="72vw">
+                <div className="kpi-card">
+                  <div className="kpi-icon-box">
+                    <IconClock size={26} />
+                  </div>
+                  <div>
+                    <div className="kpi-number">7+ Years</div>
+                    <div className="kpi-label">Mar 2019 – Present</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="kpi-number">7+ Years</div>
-                  <div className="kpi-label">Mar 2019 – Present</div>
-                </div>
-              </div>
 
-              <div className="kpi-card">
-                <div className="kpi-icon-box">
-                  <IconBuilding size={26} />
+                <div className="kpi-card">
+                  <div className="kpi-icon-box">
+                    <IconBuilding size={26} />
+                  </div>
+                  <div>
+                    <div className="kpi-number">6 Roles</div>
+                    <div className="kpi-label">5 Leading Organizations</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="kpi-number">6 Roles</div>
-                  <div className="kpi-label">5 Leading Organizations</div>
-                </div>
-              </div>
 
-              <div className="kpi-card">
-                <div className="kpi-icon-box">
-                  <IconLayers size={26} />
+                <div className="kpi-card">
+                  <div className="kpi-icon-box">
+                    <IconLayers size={26} />
+                  </div>
+                  <div>
+                    <div className="kpi-number">15 Skills</div>
+                    <div className="kpi-label">Core Technical Competencies</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="kpi-number">15 Skills</div>
-                  <div className="kpi-label">Core Technical Competencies</div>
-                </div>
-              </div>
 
-              <div className="kpi-card">
-                <div className="kpi-icon-box">
-                  <IconGlobe size={26} />
+                <div className="kpi-card">
+                  <div className="kpi-icon-box">
+                    <IconGlobe size={26} />
+                  </div>
+                  <div>
+                    <div className="kpi-number">Global Ready</div>
+                    <div className="kpi-label">Open to International Relocation</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="kpi-number">Global Ready</div>
-                  <div className="kpi-label">Open to International Relocation</div>
-                </div>
-              </div>
+              </MobileSwiper>
             </div>
           </div>
         </section>
@@ -855,7 +857,12 @@ export default function Home() {
                   <div key={item.id} className="timeline-item">
                     <div className="timeline-marker">{item.icon}</div>
 
-                    <div className="exp-card">
+                    <div
+                      className="exp-card exp-card-interactive"
+                      onClick={() => setSelectedExperience(item)}
+                      role="button"
+                      tabIndex={0}
+                    >
                       <div className="exp-header">
                         <div>
                           <h3 className="exp-role-title">{item.role}</h3>
@@ -882,8 +889,9 @@ export default function Home() {
                         {item.summary}
                       </p>
 
+                      {/* Display primary 2 key bullet points in card */}
                       <ul className="exp-bullets">
-                        {item.highlights.map((bullet, bIndex) => (
+                        {item.highlights.slice(0, 2).map((bullet, bIndex) => (
                           <li key={bIndex} className="exp-bullet-item">
                             <span className="exp-bullet-icon">
                               <IconChevronRight size={15} />
@@ -893,12 +901,29 @@ export default function Home() {
                         ))}
                       </ul>
 
-                      <div className="exp-tags">
-                        {item.skills.map((tag, tIndex) => (
-                          <span key={tIndex} className="exp-tag">
-                            {tag}
-                          </span>
-                        ))}
+                      <div className="exp-footer-row">
+                        <div className="exp-tags">
+                          {item.skills.slice(0, 4).map((tag, tIndex) => (
+                            <span key={tIndex} className="exp-tag">
+                              {tag}
+                            </span>
+                          ))}
+                          {item.skills.length > 4 && (
+                            <span className="exp-tag exp-tag-more">+{item.skills.length - 4} more</span>
+                          )}
+                        </div>
+
+                        <button
+                          type="button"
+                          className="exp-view-details-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedExperience(item);
+                          }}
+                        >
+                          <span>View Details</span>
+                          <IconExternalLink size={14} />
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -910,7 +935,13 @@ export default function Home() {
             <div className="mobile-timeline-swiper-only">
               <MobileSwiper id="mobile-exp-swiper" cardWidthMobile="88vw">
                 {filteredExperience.map((item) => (
-                  <div key={item.id} className="exp-card">
+                  <div
+                    key={item.id}
+                    className="exp-card exp-card-interactive"
+                    onClick={() => setSelectedExperience(item)}
+                    role="button"
+                    tabIndex={0}
+                  >
                     <div className="exp-header">
                       <div>
                         <h3 className="exp-role-title">{item.role}</h3>
@@ -938,7 +969,7 @@ export default function Home() {
                     </p>
 
                     <ul className="exp-bullets">
-                      {item.highlights.map((bullet, bIndex) => (
+                      {item.highlights.slice(0, 2).map((bullet, bIndex) => (
                         <li key={bIndex} className="exp-bullet-item">
                           <span className="exp-bullet-icon">
                             <IconChevronRight size={15} />
@@ -948,12 +979,26 @@ export default function Home() {
                       ))}
                     </ul>
 
-                    <div className="exp-tags">
-                      {item.skills.map((tag, tIndex) => (
-                        <span key={tIndex} className="exp-tag">
-                          {tag}
-                        </span>
-                      ))}
+                    <div className="exp-footer-row">
+                      <div className="exp-tags">
+                        {item.skills.slice(0, 3).map((tag, tIndex) => (
+                          <span key={tIndex} className="exp-tag">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      <button
+                        type="button"
+                        className="exp-view-details-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedExperience(item);
+                        }}
+                      >
+                        <span>Details</span>
+                        <IconExternalLink size={13} />
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -1198,6 +1243,90 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Experience Detail Popup Modal */}
+      {selectedExperience && (
+        <div
+          className="exp-modal-backdrop"
+          onClick={() => setSelectedExperience(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="exp-modal-card"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="exp-modal-close-btn"
+              onClick={() => setSelectedExperience(null)}
+              aria-label="Close modal"
+            >
+              <IconX size={20} />
+            </button>
+
+            <div className="exp-modal-header">
+              <div className="exp-modal-icon-wrap">
+                {selectedExperience.icon}
+              </div>
+              <div className="exp-modal-titles">
+                <span className={`exp-period-badge ${selectedExperience.isCurrent ? "current" : ""}`}>
+                  {selectedExperience.isCurrent && <span className="pulse-dot"></span>}
+                  <IconClock size={14} />
+                  <span>{selectedExperience.period}</span>
+                </span>
+                <h3 className="exp-modal-role">{selectedExperience.role}</h3>
+                <div className="exp-modal-company">
+                  <IconBuilding size={16} />
+                  <span>{selectedExperience.company}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="exp-modal-body">
+              <div className="exp-modal-section">
+                <h4 className="exp-modal-section-title">Overview & Impact</h4>
+                <p className="exp-modal-summary">{selectedExperience.summary}</p>
+              </div>
+
+              <div className="exp-modal-section">
+                <h4 className="exp-modal-section-title">Key Responsibilities & Deliverables</h4>
+                <ul className="exp-modal-bullets">
+                  {selectedExperience.highlights.map((highlight, hIdx) => (
+                    <li key={hIdx} className="exp-modal-bullet-item">
+                      <span className="exp-bullet-icon">
+                        <IconChevronRight size={16} />
+                      </span>
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="exp-modal-section">
+                <h4 className="exp-modal-section-title">Skills & Competencies Demonstrated</h4>
+                <div className="exp-modal-tags">
+                  {selectedExperience.skills.map((skill, sIdx) => (
+                    <span key={sIdx} className="exp-tag">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="exp-modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary btn-sm"
+                onClick={() => setSelectedExperience(null)}
+              >
+                <span>Close</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Toast Notification */}
       {toastMessage && (
