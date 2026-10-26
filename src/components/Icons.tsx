@@ -224,6 +224,12 @@ export const IconArrowUp: React.FC<IconProps> = ({ className = "", size = 20, co
   </svg>
 );
 
+export const IconChevronLeft: React.FC<IconProps> = ({ className = "", size = 20, color = "currentColor" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <polyline points="15 18 9 12 15 6" />
+  </svg>
+);
+
 export const IconChevronRight: React.FC<IconProps> = ({ className = "", size = 20, color = "currentColor" }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
     <polyline points="9 18 15 12 9 6" />

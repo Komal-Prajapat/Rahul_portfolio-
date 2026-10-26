@@ -1,5 +1,6 @@
 /* Rahul Prajapati - Minimalist Executive Portfolio Design System */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import 'aos/dist/aos.css';
 
 :root {
   --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -145,17 +146,19 @@ button, input {
 .section {
   padding: 88px 0;
   position: relative;
+  scroll-margin-top: 80px;
 }
 
 @media (max-width: 768px) {
   .section {
-    padding: 56px 0;
+    padding: 48px 0;
+    scroll-margin-top: 72px;
   }
   .container {
-    padding: 0 18px;
+    padding: 0 16px;
   }
   body {
-    padding-bottom: calc(72px + env(safe-area-inset-bottom, 16px));
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 20px));
   }
 }
 
@@ -801,7 +804,7 @@ button, input {
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
   background: var(--bg-card);
   backdrop-filter: blur(12px);
   padding: 14px 18px;
@@ -828,6 +831,8 @@ button, input {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .skill-filter-btn:hover {
@@ -871,6 +876,43 @@ button, input {
   transform: translateY(-50%);
   color: var(--text-muted);
   pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .skills-filter-bar {
+    padding: 12px;
+    gap: 12px;
+    background: transparent;
+    border: none;
+    margin-bottom: 16px;
+  }
+
+  .skills-pills {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: calc(100% + 32px);
+    margin: 0 -16px;
+    padding: 4px 16px 8px 16px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+  }
+
+  .skills-pills::-webkit-scrollbar {
+    display: none;
+  }
+
+  .search-input-wrap {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .search-input {
+    padding: 11px 16px 11px 40px;
+    font-size: 0.9rem;
+    background: var(--bg-card);
+  }
 }
 
 .skills-grid {
@@ -1169,69 +1211,322 @@ button, input {
 /* ======================================================== */
 /* SECTION 4: CONTACT                                       */
 /* ======================================================== */
-.contact-actions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+.contact-unified-layout {
   max-width: 1040px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.contact-app-card {
+.contact-channels-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.contact-channel-card {
   background: var(--bg-card);
   backdrop-filter: blur(16px);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   padding: 24px;
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  align-items: flex-start;
+  gap: 18px;
   transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
 }
 
-.contact-app-card:hover {
+.contact-channel-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--border-medium), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.contact-channel-card:hover {
   border-color: var(--border-medium);
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-md), var(--shadow-glow);
+  background: var(--bg-card-hover);
 }
 
-.contact-app-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.contact-channel-card:hover::before {
+  opacity: 1;
 }
 
-.contact-app-icon-box {
-  width: 50px;
-  height: 50px;
+.channel-icon-pill {
+  width: 52px;
+  height: 52px;
   border-radius: var(--radius-md);
-  background: var(--bg-pill);
-  border: 1px solid var(--border-medium);
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.contact-channel-card:hover .channel-icon-pill {
+  transform: scale(1.06);
+}
+
+.channel-icon-pill.email {
+  background: rgba(56, 189, 248, 0.12);
   color: var(--accent-sky);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.channel-icon-pill.phone {
+  background: rgba(99, 102, 241, 0.12);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+.channel-icon-pill.whatsapp {
+  background: rgba(37, 211, 102, 0.12);
+  color: #25D366;
+  border: 1px solid rgba(37, 211, 102, 0.25);
+}
+
+.channel-icon-pill.linkedin {
+  background: rgba(14, 118, 168, 0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(14, 118, 168, 0.25);
+}
+
+.channel-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.channel-label {
+  font-size: 0.725rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.channel-primary-val {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--transition-fast);
+}
+
+a.channel-primary-val:hover {
+  color: var(--accent-sky);
+}
+
+.channel-sub {
+  font-size: 0.825rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-top: 2px;
+}
+
+.channel-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.channel-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.825rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.channel-action-btn.primary {
+  background: var(--bg-surface-elevated);
+  color: var(--text-heading);
+  border-color: var(--border-medium);
+}
+
+.channel-action-btn.primary:hover {
+  background: var(--gradient-brand);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+}
+
+.channel-action-btn.copy {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  padding: 8px;
+}
+
+.channel-action-btn.copy:hover {
+  color: var(--accent-sky);
+  border-color: var(--border-medium);
+  background: var(--bg-pill);
+}
+
+.channel-action-btn.whatsapp-btn {
+  background: rgba(37, 211, 102, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(37, 211, 102, 0.3);
+}
+
+.channel-action-btn.whatsapp-btn:hover {
+  background: var(--gradient-emerald);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+}
+
+.channel-action-btn.linkedin-btn {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--accent-sky);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.channel-action-btn.linkedin-btn:hover {
+  background: linear-gradient(135deg, #0284c7 0%, #0077b5 100%);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(0, 119, 181, 0.4);
+}
+
+/* Mobility Banner */
+.contact-mobility-banner {
+  background: linear-gradient(135deg, rgba(14, 22, 40, 0.95) 0%, rgba(18, 27, 51, 0.9) 100%);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.contact-mobility-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--gradient-brand);
+}
+
+.mobility-icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: var(--bg-pill);
+  border: 1px solid var(--border-medium);
+  color: var(--accent-sky);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
-.contact-app-title {
-  font-size: 0.775rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  letter-spacing: 0.05em;
+.mobility-text {
+  flex: 1;
 }
 
-.contact-app-value {
-  font-size: 1rem;
+.mobility-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.725rem;
+  font-weight: 700;
+  color: #34d399;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.mobility-heading {
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--text-heading);
+  margin-bottom: 6px;
 }
 
-.contact-app-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: auto;
+.mobility-desc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.mobility-action {
+  flex-shrink: 0;
+}
+
+/* Responsive adjustments for contact section */
+@media (max-width: 900px) {
+  .contact-channels-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .contact-channel-card {
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .contact-mobility-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .mobility-action {
+    width: 100%;
+  }
+
+  .mobility-action a {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 540px) {
+  .contact-channel-card {
+    flex-wrap: wrap;
+  }
+
+  .channel-btns {
+    width: 100%;
+    flex-direction: row;
+    margin-top: 4px;
+  }
+
+  .channel-action-btn {
+    flex: 1;
+  }
 }
 
 /* Toast */
@@ -1319,6 +1614,12 @@ button, input {
 .back-to-top-btn:hover {
   border-color: var(--border-medium);
   background: var(--bg-pill);
+}
+
+@media (max-width: 768px) {
+  .footer {
+    display: none !important;
+  }
 }
 
 /* ======================================================== */
@@ -1446,5 +1747,220 @@ button, input {
     display: none !important;
   }
 }
+
+/* ======================================================== */
+/* RESPONSIVE CARD SWIPER (DESKTOP + TABLET + MOBILE)       */
+/* ======================================================== */
+.responsive-card-swiper {
+  position: relative;
+  width: 100%;
+}
+
+.swiper-header-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.swiper-item-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg-surface-elevated);
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+}
+
+.swiper-item-counter .counter-active {
+  color: var(--accent-sky);
+  font-weight: 700;
+}
+
+.auto-pulse-indicator {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-emerald);
+  box-shadow: 0 0 8px var(--accent-emerald);
+  animation: pulseDot 2s infinite ease-in-out;
+  margin-left: 2px;
+}
+
+.swiper-arrow-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.swiper-arrow-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.swiper-arrow-btn:hover:not(:disabled) {
+  background: var(--bg-card-hover);
+  border-color: var(--border-medium);
+  color: var(--accent-sky);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.25);
+}
+
+.swiper-arrow-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.swiper-track-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  gap: 18px;
+  padding: 10px 4px 20px 4px;
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+}
+
+.swiper-track-container::-webkit-scrollbar {
+  display: none;
+}
+
+.swiper-track-container.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+}
+
+/* Slide item responsive sizing */
+.swiper-slide-item {
+  flex: 0 0 calc((100% - 36px) / 3); /* 3 cards per view on wide desktop */
+  max-width: calc((100% - 36px) / 3);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+}
+
+.swiper-slide-item > * {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+}
+
+/* Dots navigation */
+.swiper-dots-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 6px 0;
+}
+
+.swiper-dot-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0;
+}
+
+.swiper-dot-indicator:hover {
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(1.2);
+}
+
+.swiper-dot-indicator.active {
+  width: 24px;
+  background: var(--accent-sky);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) and (min-width: 641px) {
+  /* Tablet: 2 cards per view */
+  .swiper-slide-item {
+    flex: 0 0 calc((100% - 18px) / 2);
+    max-width: calc((100% - 18px) / 2);
+  }
+}
+
+@media (max-width: 640px) {
+  /* Mobile: Fluid peek card with clean margins matching container */
+  .responsive-card-swiper {
+    margin: 0 -16px;
+    width: calc(100% + 32px);
+  }
+
+  .swiper-header-controls {
+    padding: 0 16px;
+    margin-bottom: 12px;
+  }
+
+  .swiper-item-counter {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+  }
+
+  .swiper-arrow-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .swiper-track-container {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 6px;
+    padding-bottom: 16px;
+    gap: 12px;
+  }
+
+  .swiper-slide-item {
+    flex: 0 0 var(--mobile-card-w, 84vw);
+    max-width: var(--mobile-card-w, 84vw);
+    scroll-snap-align: center;
+  }
+
+  .swiper-dots-nav {
+    margin-top: 6px;
+    padding: 4px 16px;
+    gap: 6px;
+  }
+
+  .swiper-dot-indicator {
+    width: 6px;
+    height: 6px;
+  }
+
+  .swiper-dot-indicator.active {
+    width: 18px;
+  }
+}
+
 
 

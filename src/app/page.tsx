@@ -34,6 +34,8 @@ import {
   IconActivity,
 } from "@/components/Icons";
 import { MobileSwiper } from "@/components/MobileSwiper";
+import { CardSwiper } from "@/components/CardSwiper";
+import AOS from "aos";
 
 interface SkillItem {
   name: string;
@@ -295,8 +297,16 @@ export default function Home() {
     },
   ];
 
-  // Scrollspy for active navigation state
+  // Initialize AOS & Scrollspy for active navigation state
   useEffect(() => {
+    AOS.init({
+      duration: 800,
+      easing: "ease-out-cubic",
+      once: true,
+      offset: 50,
+      delay: 50,
+    });
+
     const handleScroll = () => {
       const sections = ["about", "skills", "experience", "contact"];
       const scrollPos = window.scrollY + 200;
@@ -404,7 +414,7 @@ export default function Home() {
         <section className="hero-section" id="hero">
           <div className="container">
             <div className="hero-grid">
-              <div className="hero-text-col">
+              <div className="hero-text-col" data-aos="fade-right">
                 <div className="hero-badge-wrap">
                   <div className="status-pill">
                     <span className="pulse-dot"></span>
@@ -447,7 +457,7 @@ export default function Home() {
               </div>
 
               {/* Hero Portrait Visual */}
-              <div className="hero-visual-col">
+              <div className="hero-visual-col" data-aos="fade-left" data-aos-delay="100">
                 <div className="hero-visual-card">
                   <div className="hero-floating-badge floating-badge-top">
                     <div className="floating-badge-icon-box">
@@ -484,7 +494,7 @@ export default function Home() {
             </div>
 
             {/* Quick KPI Counters */}
-            <div className="kpi-grid">
+            <div className="kpi-grid" data-aos="fade-up" data-aos-delay="200">
               <div className="kpi-card">
                 <div className="kpi-icon-box">
                   <IconClock size={26} />
@@ -531,7 +541,7 @@ export default function Home() {
         {/* 1. ABOUT SECTION */}
         <section className="section" id="about">
           <div className="container">
-            <div className="section-header">
+            <div className="section-header" data-aos="fade-up">
               <span className="section-tag">
                 <IconUser size={14} />
                 <span>Executive Background</span>
@@ -547,91 +557,93 @@ export default function Home() {
               </p>
             </div>
 
-            {/* 4 Strategic Value Pillars - Swiper on Mobile / Grid on Desktop */}
-            <MobileSwiper desktopGridClass="pillars-grid" id="about-pillars" cardWidthMobile="85vw">
-              <div className="glass-card pillar-card">
-                <div className="pillar-header">
-                  <div className="pillar-icon-box">
-                    <IconServer size={22} />
+            {/* 4 Strategic Value Pillars - Responsive Auto Swiper on Desktop, Tablet & Mobile */}
+            <div data-aos="fade-up" data-aos-delay="100">
+              <CardSwiper id="about-pillars" cardWidthMobile="85vw" autoplay={true} autoplayInterval={3200}>
+                <div className="glass-card pillar-card">
+                  <div className="pillar-header">
+                    <div className="pillar-icon-box">
+                      <IconServer size={22} />
+                    </div>
+                    <div>
+                      <h3 className="pillar-title">IT Infrastructure & Vendor Synergy</h3>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="pillar-title">IT Infrastructure & Vendor Synergy</h3>
+                  <p>
+                    Specialized in tracking infrastructure tickets, hardware allocation, network availability follow-ups, and
+                    managing critical third-party vendor SLAs to prevent downtime.
+                  </p>
+                  <div className="pillar-tags">
+                    <span className="pillar-tag">Vendor SLAs</span>
+                    <span className="pillar-tag">Asset Tracking</span>
+                    <span className="pillar-tag">Operational Follow-up</span>
                   </div>
                 </div>
-                <p>
-                  Specialized in tracking infrastructure tickets, hardware allocation, network availability follow-ups, and
-                  managing critical third-party vendor SLAs to prevent downtime.
-                </p>
-                <div className="pillar-tags">
-                  <span className="pillar-tag">Vendor SLAs</span>
-                  <span className="pillar-tag">Asset Tracking</span>
-                  <span className="pillar-tag">Operational Follow-up</span>
-                </div>
-              </div>
 
-              <div className="glass-card pillar-card">
-                <div className="pillar-header">
-                  <div className="pillar-icon-box">
-                    <IconFileSpreadsheet size={22} />
+                <div className="glass-card pillar-card">
+                  <div className="pillar-header">
+                    <div className="pillar-icon-box">
+                      <IconFileSpreadsheet size={22} />
+                    </div>
+                    <div>
+                      <h3 className="pillar-title">Advanced Excel & MIS Intelligence</h3>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="pillar-title">Advanced Excel & MIS Intelligence</h3>
+                  <p>
+                    Expertise in transforming raw operational logs into high-clarity executive MIS dashboards, automating
+                    recurring reports, and delivering actionable operational analytics.
+                  </p>
+                  <div className="pillar-tags">
+                    <span className="pillar-tag">XLOOKUP / Index-Match</span>
+                    <span className="pillar-tag">Pivot Dashboards</span>
+                    <span className="pillar-tag">Data Hygiene</span>
                   </div>
                 </div>
-                <p>
-                  Expertise in transforming raw operational logs into high-clarity executive MIS dashboards, automating
-                  recurring reports, and delivering actionable operational analytics.
-                </p>
-                <div className="pillar-tags">
-                  <span className="pillar-tag">XLOOKUP / Index-Match</span>
-                  <span className="pillar-tag">Pivot Dashboards</span>
-                  <span className="pillar-tag">Data Hygiene</span>
-                </div>
-              </div>
 
-              <div className="glass-card pillar-card">
-                <div className="pillar-header">
-                  <div className="pillar-icon-box">
-                    <IconBot size={22} />
+                <div className="glass-card pillar-card">
+                  <div className="pillar-header">
+                    <div className="pillar-icon-box">
+                      <IconBot size={22} />
+                    </div>
+                    <div>
+                      <h3 className="pillar-title">AI Productivity & Prompt Engineering</h3>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="pillar-title">AI Productivity & Prompt Engineering</h3>
+                  <p>
+                    Active user of Microsoft Copilot and advanced prompt engineering to drastically cut administrative overhead,
+                    automate ticket briefs, and synthesize complex operational data.
+                  </p>
+                  <div className="pillar-tags">
+                    <span className="pillar-tag">Microsoft Copilot</span>
+                    <span className="pillar-tag">Context Prompting</span>
+                    <span className="pillar-tag">Workflow Acceleration</span>
                   </div>
                 </div>
-                <p>
-                  Active user of Microsoft Copilot and advanced prompt engineering to drastically cut administrative overhead,
-                  automate ticket briefs, and synthesize complex operational data.
-                </p>
-                <div className="pillar-tags">
-                  <span className="pillar-tag">Microsoft Copilot</span>
-                  <span className="pillar-tag">Context Prompting</span>
-                  <span className="pillar-tag">Workflow Acceleration</span>
-                </div>
-              </div>
 
-              <div className="glass-card pillar-card">
-                <div className="pillar-header">
-                  <div className="pillar-icon-box">
-                    <IconLayers size={22} />
+                <div className="glass-card pillar-card">
+                  <div className="pillar-header">
+                    <div className="pillar-icon-box">
+                      <IconLayers size={22} />
+                    </div>
+                    <div>
+                      <h3 className="pillar-title">PMO & Stakeholder Coordination</h3>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="pillar-title">PMO & Stakeholder Coordination</h3>
+                  <p>
+                    Cross-functional background bridging technical teams, operations managers, external vendors, and executive
+                    sponsors to ensure projects finish on schedule.
+                  </p>
+                  <div className="pillar-tags">
+                    <span className="pillar-tag">PMO Governance</span>
+                    <span className="pillar-tag">Executive Briefings</span>
+                    <span className="pillar-tag">Cross-functional Sync</span>
                   </div>
                 </div>
-                <p>
-                  Cross-functional background bridging technical teams, operations managers, external vendors, and executive
-                  sponsors to ensure projects finish on schedule.
-                </p>
-                <div className="pillar-tags">
-                  <span className="pillar-tag">PMO Governance</span>
-                  <span className="pillar-tag">Executive Briefings</span>
-                  <span className="pillar-tag">Cross-functional Sync</span>
-                </div>
-              </div>
-            </MobileSwiper>
+              </CardSwiper>
+            </div>
 
             {/* Academic & Mobility Credentials Card */}
-            <div className="about-credentials-grid">
+            <div className="about-credentials-grid" data-aos="fade-up" data-aos-delay="200">
               <div className="glass-card about-credential-card">
                 <div className="pillar-icon-box">
                   <IconGraduationCap size={24} />
@@ -700,7 +712,7 @@ export default function Home() {
         {/* 2. SKILLS SECTION */}
         <section className="section" id="skills">
           <div className="container">
-            <div className="section-header">
+            <div className="section-header" data-aos="fade-up">
               <span className="section-tag">
                 <IconLayers size={14} />
                 <span>Core Competencies</span>
@@ -713,7 +725,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="skills-filter-bar">
+            <div className="skills-filter-bar" data-aos="fade-up" data-aos-delay="100">
               <div className="skills-pills">
                 <button
                   className={`skill-filter-btn ${skillCategory === "all" ? "active" : ""}`}
@@ -759,48 +771,39 @@ export default function Home() {
                 </button>
               </div>
 
-              <div className="search-input-wrap">
-                <span className="search-icon">
-                  <IconSearch size={15} />
-                </span>
-                <input
-                  type="text"
-                  placeholder="Search skills (e.g. Excel, Copilot)..."
-                  className="search-input"
-                  value={skillSearch}
-                  onChange={(e) => setSkillSearch(e.target.value)}
-                />
-              </div>
+            
             </div>
 
-            {/* Skills Swiper on Mobile / Grid on Desktop */}
-            <MobileSwiper desktopGridClass="skills-grid" id="skills-swiper" cardWidthMobile="80vw">
-              {filteredSkills.map((skill, index) => (
-                <div key={index} className="skill-card">
-                  <div className="skill-card-top">
-                    <div className="skill-name-wrap">
-                      <div className="skill-icon-box">{skill.icon}</div>
-                      <span className="skill-name">{skill.name}</span>
+            {/* Responsive Skills Swiper across Desktop, Tablet & Mobile */}
+            <div data-aos="fade-up" data-aos-delay="150">
+              <CardSwiper id="skills-swiper" cardWidthMobile="82vw" autoplay={true} autoplayInterval={3500}>
+                {filteredSkills.map((skill, index) => (
+                  <div key={index} className="skill-card">
+                    <div className="skill-card-top">
+                      <div className="skill-name-wrap">
+                        <div className="skill-icon-box">{skill.icon}</div>
+                        <span className="skill-name">{skill.name}</span>
+                      </div>
+                      <span className="skill-level-badge">{skill.level}</span>
                     </div>
-                    <span className="skill-level-badge">{skill.level}</span>
+                    <p className="skill-desc">{skill.description}</p>
+                    <div className="skill-progress-track">
+                      <div
+                        className="skill-progress-bar"
+                        style={{ width: `${skill.proficiency}%` }}
+                      ></div>
+                    </div>
                   </div>
-                  <p className="skill-desc">{skill.description}</p>
-                  <div className="skill-progress-track">
-                    <div
-                      className="skill-progress-bar"
-                      style={{ width: `${skill.proficiency}%` }}
-                    ></div>
-                  </div>
-                </div>
-              ))}
-            </MobileSwiper>
+                ))}
+              </CardSwiper>
+            </div>
           </div>
         </section>
 
         {/* 3. EXPERIENCE SECTION */}
         <section className="section" id="experience">
           <div className="container">
-            <div className="section-header">
+            <div className="section-header" data-aos="fade-up">
               <span className="section-tag">
                 <IconBriefcase size={14} />
                 <span>Career History</span>
@@ -814,7 +817,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="timeline-tabs">
+            <div className="timeline-tabs" data-aos="fade-up" data-aos-delay="100">
               <button
                 className={`timeline-tab-btn ${experienceTab === "all" ? "active" : ""}`}
                 onClick={() => setExperienceTab("all")}
@@ -846,7 +849,7 @@ export default function Home() {
             </div>
 
             {/* Desktop Vertical Timeline */}
-            <div className="desktop-timeline-only">
+            <div className="desktop-timeline-only" data-aos="fade-up" data-aos-delay="150">
               <div className="timeline-container">
                 {filteredExperience.map((item) => (
                   <div key={item.id} className="timeline-item">
@@ -962,7 +965,7 @@ export default function Home() {
         {/* 4. CONTACT SECTION */}
         <section className="section" id="contact">
           <div className="container">
-            <div className="section-header">
+            <div className="section-header" data-aos="fade-up">
               <span className="section-tag">
                 <IconPhone size={14} />
                 <span>Direct Connection</span>
@@ -976,141 +979,132 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Contact Actions - Swiper on Mobile / Grid on Desktop */}
-            <MobileSwiper desktopGridClass="contact-actions-grid" id="contact-swiper" cardWidthMobile="85vw">
-              {/* Email Card */}
-              <div className="contact-app-card">
-                <div className="contact-app-header">
-                  <div className="contact-app-icon-box">
+            {/* Redesigned Executive Contact Section */}
+            <div className="contact-unified-layout" data-aos="fade-up" data-aos-delay="100">
+              {/* Primary 4 Direct Channels */}
+              <div className="contact-channels-grid">
+                {/* Email Card */}
+                <div className="contact-channel-card">
+                  <div className="channel-icon-pill email">
                     <IconMail size={22} />
                   </div>
-                  <div>
-                    <div className="contact-app-title">Email Directly</div>
-                    <div className="contact-app-value">rp361133@gmail.com</div>
+                  <div className="channel-info">
+                    <div className="channel-label">Direct Email</div>
+                    <a href="mailto:rp361133@gmail.com" className="channel-primary-val">
+                      rp361133@gmail.com
+                    </a>
+                    <div className="channel-sub">Send job opportunities, interview requests, or official documentation.</div>
+                  </div>
+                  <div className="channel-btns">
+                    <a href="mailto:rp361133@gmail.com" className="channel-action-btn primary">
+                      <IconMail size={15} />
+                      <span>Compose</span>
+                    </a>
+                    <button
+                      className="channel-action-btn copy"
+                      onClick={() => copyToClipboard("rp361133@gmail.com", "Email")}
+                      title="Copy Email"
+                    >
+                      <IconCopy size={15} />
+                    </button>
                   </div>
                 </div>
-                <p style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
-                  Send job descriptions, RFPs, or interview invitations directly to my personal inbox.
-                </p>
-                <div className="contact-app-actions">
-                  <a href="mailto:rp361133@gmail.com" className="btn btn-primary btn-sm" style={{ flex: 1 }}>
-                    <IconMail size={15} />
-                    <span>Send Email</span>
-                  </a>
-                  <button
-                    className="btn btn-secondary btn-sm"
-                    onClick={() => copyToClipboard("rp361133@gmail.com", "Email")}
-                    title="Copy Email"
-                  >
-                    <IconCopy size={15} />
-                    <span>Copy</span>
-                  </button>
-                </div>
-              </div>
 
-              {/* Phone Card */}
-              <div className="contact-app-card">
-                <div className="contact-app-header">
-                  <div className="contact-app-icon-box">
+                {/* Phone Card */}
+                <div className="contact-channel-card">
+                  <div className="channel-icon-pill phone">
                     <IconPhone size={22} />
                   </div>
-                  <div>
-                    <div className="contact-app-title">Direct Phone</div>
-                    <div className="contact-app-value">+91 7874691098</div>
+                  <div className="channel-info">
+                    <div className="channel-label">Mobile Phone</div>
+                    <a href="tel:+917874691098" className="channel-primary-val">
+                      +91 7874691098
+                    </a>
+                    <div className="channel-sub">Available for phone discussions, recruiter calls, and initial screenings.</div>
+                  </div>
+                  <div className="channel-btns">
+                    <a href="tel:+917874691098" className="channel-action-btn primary">
+                      <IconPhone size={15} />
+                      <span>Call</span>
+                    </a>
+                    <button
+                      className="channel-action-btn copy"
+                      onClick={() => copyToClipboard("7874691098", "Phone")}
+                      title="Copy Phone"
+                    >
+                      <IconCopy size={15} />
+                    </button>
                   </div>
                 </div>
-                <p style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
-                  Available for phone screens, recruiter calls, and immediate operational discussions.
-                </p>
-                <div className="contact-app-actions">
-                  <a href="tel:+917874691098" className="btn btn-primary btn-sm" style={{ flex: 1 }}>
-                    <IconPhone size={15} />
-                    <span>Call Direct</span>
-                  </a>
-                  <button
-                    className="btn btn-secondary btn-sm"
-                    onClick={() => copyToClipboard("7874691098", "Phone")}
-                    title="Copy Phone"
-                  >
-                    <IconCopy size={15} />
-                    <span>Copy</span>
-                  </button>
-                </div>
-              </div>
 
-              {/* WhatsApp Card */}
-              <div className="contact-app-card">
-                <div className="contact-app-header">
-                  <div className="contact-app-icon-box" style={{ color: "#25D366" }}>
+                {/* WhatsApp Card */}
+                <div className="contact-channel-card">
+                  <div className="channel-icon-pill whatsapp">
                     <IconMessageCircle size={22} />
                   </div>
-                  <div>
-                    <div className="contact-app-title">WhatsApp Chat</div>
-                    <div className="contact-app-value">+91 7874691098</div>
+                  <div className="channel-info">
+                    <div className="channel-label">WhatsApp Messenger</div>
+                    <div className="channel-primary-val">+91 7874691098</div>
+                    <div className="channel-sub">Immediate text inquiries, quick schedule coordination, or file sharing.</div>
+                  </div>
+                  <div className="channel-btns">
+                    <a
+                      href="https://wa.me/917874691098?text=Hi%20Rahul,%20I%20reviewed%20your%20portfolio%20and%20would%20like%20to%20connect%20regarding%20an%20opportunity."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="channel-action-btn whatsapp-btn"
+                    >
+                      <IconMessageCircle size={15} />
+                      <span>Message</span>
+                    </a>
                   </div>
                 </div>
-                <p style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
-                  Quick messaging for urgent inquiries, interview scheduling, or document sharing.
-                </p>
-                <div className="contact-app-actions">
-                  <a
-                    href="https://wa.me/917874691098?text=Hi%20Rahul,%20I%20reviewed%20your%20portfolio%20and%20would%20like%20to%20connect%20regarding%20an%20opportunity."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-emerald btn-sm"
-                    style={{ flex: 1 }}
-                  >
-                    <IconMessageCircle size={15} />
-                    <span>Chat on WhatsApp</span>
-                  </a>
-                </div>
-              </div>
 
-              {/* LinkedIn Card */}
-              <div className="contact-app-card">
-                <div className="contact-app-header">
-                  <div className="contact-app-icon-box" style={{ color: "#0077b5" }}>
+                {/* LinkedIn Card */}
+                <div className="contact-channel-card">
+                  <div className="channel-icon-pill linkedin">
                     <IconLinkedin size={22} />
                   </div>
-                  <div>
-                    <div className="contact-app-title">LinkedIn Network</div>
-                    <div className="contact-app-value">rahul-prajapati-619b37244</div>
+                  <div className="channel-info">
+                    <div className="channel-label">LinkedIn Profile</div>
+                    <div className="channel-primary-val">rahul-prajapati-619b37244</div>
+                    <div className="channel-sub">Recommendations, professional endorsements, and career connection.</div>
                   </div>
-                </div>
-                <p style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
-                  Connect on LinkedIn to review recommendations, endorsements, and mutual network connections.
-                </p>
-                <div className="contact-app-actions">
-                  <a
-                    href="https://linkedin.com/in/rahul-prajapati-619b37244"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-primary btn-sm"
-                    style={{ flex: 1 }}
-                  >
-                    <IconExternalLink size={15} />
-                    <span>View LinkedIn Profile</span>
-                  </a>
+                  <div className="channel-btns">
+                    <a
+                      href="https://linkedin.com/in/rahul-prajapati-619b37244"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="channel-action-btn linkedin-btn"
+                    >
+                      <IconExternalLink size={15} />
+                      <span>Connect</span>
+                    </a>
+                  </div>
                 </div>
               </div>
 
-              {/* Location & Relocation Card */}
-              <div className="contact-app-card">
-                <div className="contact-app-header">
-                  <div className="contact-app-icon-box">
-                    <IconMapPin size={22} />
-                  </div>
-                  <div>
-                    <div className="contact-app-title">Location & Mobility Status</div>
-                    <div className="contact-app-value">Ahmedabad, Gujarat, India • Open to International Relocation</div>
-                  </div>
+              {/* Mobility & Relocation Feature Banner */}
+              <div className="contact-mobility-banner">
+                <div className="mobility-icon-box">
+                  <IconMapPin size={24} />
                 </div>
-                <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>
-                  Prepared for global deployments and relocation opportunities across the Middle East (Dubai/UAE, Saudi Arabia, Qatar),
-                  Europe, Southeast Asia, North America, and major metropolitan hubs across India.
-                </p>
+                <div className="mobility-text">
+                  <div className="mobility-badge">
+                    <span className="pulse-dot"></span>
+                    <span>GLOBAL MOBILITY READY</span>
+                  </div>
+                  <h3 className="mobility-heading">
+                    Based in Ahmedabad, Gujarat, India • Open to Relocation
+                  </h3>
+                  <p className="mobility-desc">
+                    Prepared for international relocations and onsite deployments across the Middle East (Dubai/UAE, Saudi Arabia, Qatar),
+                    Europe, Southeast Asia, North America, and major tech hubs across India.
+                  </p>
+                </div>
+              
               </div>
-            </MobileSwiper>
+            </div>
           </div>
         </section>
       </main>
