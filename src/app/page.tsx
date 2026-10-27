@@ -366,7 +366,7 @@ export default function Home() {
           <div className="navbar-inner">
             <a href="#hero" className="nav-brand">
               <Image
-                src="/rahul-avatar.jpg"
+                src="/rahul-avatar.jfif"
                 alt="Rahul Prajapati"
                 width={40}
                 height={40}
@@ -471,7 +471,7 @@ export default function Home() {
 
                   <div className="hero-img-container">
                     <Image
-                      src="/rahul-avatar.jpg"
+                      src="/rahul-avatar.jfif"
                       alt="Rahul Prajapati - IT Infrastructure Coordinator"
                       width={500}
                       height={500}
